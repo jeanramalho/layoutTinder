@@ -57,7 +57,13 @@ extension CombineVC {
     @objc func handlerCard(_ gesture: UIPanGestureRecognizer){
         if let card = gesture.view {
             let point = gesture.translation(in: view)
+            //implementa movimento de drag ou seja segurar e puchar o elemento na view
             card.center = CGPoint(x: view.center.x + point.x, y: view.center.y + point.y)
+            
+            // retorna com o elemento para a posição anterior quando o usuário solta o elemento
+            if gesture.state == .ended {
+                card.center = self.view.center
+            }
         }
     }
 }
