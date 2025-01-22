@@ -55,6 +55,9 @@ class CombineVC: UIViewController {
 
 extension CombineVC {
     @objc func handlerCard(_ gesture: UIPanGestureRecognizer){
-        print("handlerCard")
+        if let card = gesture.view {
+            let point = gesture.translation(in: view)
+            card.center = CGPoint(x: view.center.x + point.x, y: view.center.y + point.y)
+        }
     }
 }
