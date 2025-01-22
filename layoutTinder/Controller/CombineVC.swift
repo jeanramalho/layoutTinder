@@ -9,49 +9,58 @@ import UIKit
 
 class CombineVC: UIViewController {
     
-    lazy var redView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .red
-        return view
-    }()
+//    lazy var redView: UIView = {
+//        let view = UIView()
+//        view.translatesAutoresizingMaskIntoConstraints = false
+//        view.backgroundColor = .red
+//        view.frame =
+//        return view
+//    }()
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
-        
-        let gesture = UIPanGestureRecognizer()
-        gesture.addTarget(self, action: #selector(handlerCard))
-        redView.addGestureRecognizer(gesture)
+        adicionarCards()
     }
     
     
-    private func setupUI(){
-        view.backgroundColor = UIColor.systemGroupedBackground
-        setHierarchy()
-        setConstraints()
-        
-        
-        
-    }
+//    private func setupUI(){
+//        
+//        adicionarCards()
+//
+//    }
     
-    private func setHierarchy(){
-        view.addSubview(redView)
-        
-       
-    }
     
-    private func setConstraints(){
-        NSLayoutConstraint.activate([
-            redView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            redView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            redView.heightAnchor.constraint(equalToConstant: 300),
-            redView.widthAnchor.constraint(equalToConstant: 200)
-        ])
-    }
+//    private func setConstraints(){
+//        NSLayoutConstraint.activate([
+//            redView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            redView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+//            redView.heightAnchor.constraint(equalToConstant: 300),
+//            redView.widthAnchor.constraint(equalToConstant: 200)
+//        ])
+//    }
 }
+
+extension CombineVC {
+   func adicionarCards(){
+
+           for item in 1...3 {
+               let redView = UIView()
+               redView.backgroundColor = item == 2 ? .blue : .red
+               redView.frame = CGRect(x: 0, y: 0, width: 200, height: 300)
+               redView.center = view.center
+               
+               
+               let gesture = UIPanGestureRecognizer()
+               gesture.addTarget(self, action: #selector(handlerCard))
+               redView.addGestureRecognizer(gesture)
+           
+               view.addSubview(redView)
+       }
+   }
+}
+
 
 extension CombineVC {
     @objc func handlerCard(_ gesture: UIPanGestureRecognizer){
@@ -62,7 +71,10 @@ extension CombineVC {
             
             // retorna com o elemento para a posição anterior quando o usuário solta o elemento
             if gesture.state == .ended {
-                card.center = self.view.center
+                //Implementa animação para retorno do card para a posição inicial
+                UIView.animate(withDuration: 0.2) {
+                    card.center = self.view.center
+                }
             }
         }
     }
