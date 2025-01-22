@@ -46,9 +46,8 @@ extension CombineVC {
    func adicionarCards(){
 
            for item in 1...3 {
-               let redView = UIView()
-               redView.backgroundColor = item == 2 ? .blue : .red
-               redView.frame = CGRect(x: 0, y: 0, width: 200, height: 300)
+               let redView = CombineCardView()
+               redView.frame = CGRect(x: 0, y: 0, width: view.bounds.width - 32, height: view.bounds.height * 0.7)
                redView.center = view.center
                
                
@@ -69,11 +68,18 @@ extension CombineVC {
             //implementa movimento de drag ou seja segurar e puchar o elemento na view
             card.center = CGPoint(x: view.center.x + point.x, y: view.center.y + point.y)
             
+            //pega angulo para rotação
+            let rotationAngle = point.x / view.bounds.width * 0.4
+            
+            //implementa rotação no card para que quando for arrastado ele tenha efeito rotação
+            card.transform = CGAffineTransform(rotationAngle: rotationAngle)
+            
             // retorna com o elemento para a posição anterior quando o usuário solta o elemento
             if gesture.state == .ended {
                 //Implementa animação para retorno do card para a posição inicial
                 UIView.animate(withDuration: 0.2) {
                     card.center = self.view.center
+                    card.transform = .identity
                 }
             }
         }
