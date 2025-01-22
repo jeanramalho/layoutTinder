@@ -16,19 +16,31 @@ class CombineVC: UIViewController {
         return view
     }()
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        
+        let gesture = UIPanGestureRecognizer()
+        gesture.addTarget(self, action: #selector(handlerCard))
+        redView.addGestureRecognizer(gesture)
     }
+    
     
     private func setupUI(){
         view.backgroundColor = UIColor.systemGroupedBackground
         setHierarchy()
         setConstraints()
+        
+        
+        
     }
     
     private func setHierarchy(){
         view.addSubview(redView)
+        
+       
     }
     
     private func setConstraints(){
@@ -38,5 +50,11 @@ class CombineVC: UIViewController {
             redView.heightAnchor.constraint(equalToConstant: 300),
             redView.widthAnchor.constraint(equalToConstant: 200)
         ])
+    }
+}
+
+extension CombineVC {
+    @objc func handlerCard(_ gesture: UIPanGestureRecognizer){
+        print("handlerCard")
     }
 }
