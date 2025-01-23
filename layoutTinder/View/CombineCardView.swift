@@ -9,10 +9,20 @@ import UIKit
 
 class CombineCardView: UIView {
     
+    var usuario: Usuario? {
+        didSet {
+            if let usuario = usuario {
+                fotoImageView.image = UIImage(named: usuario.foto)
+                nomeLabel.text = usuario.nome
+                idadeLabel.text = String(usuario.idade)
+                fraseLabel.text = usuario.frase
+            }
+        }
+    }
+    
     lazy var fotoImageView: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.image = UIImage(named: "pessoa-1")
         image.contentMode = .scaleToFill
         image.clipsToBounds = true
         return image
@@ -22,7 +32,6 @@ class CombineCardView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.text = "Ana Laura"
         label.textColor = .white
         label.font = UIFont.boldSystemFont(ofSize: 32)
         label.layer.shadowColor = UIColor.black.cgColor
@@ -36,8 +45,7 @@ class CombineCardView: UIView {
     lazy var idadeLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
-        label.text = "20"
+        label.numberOfLines = 1
         label.textColor = .white
         label.font = UIFont.systemFont(ofSize: 28)
         label.layer.shadowColor = UIColor.black.cgColor
@@ -51,8 +59,7 @@ class CombineCardView: UIView {
     lazy var fraseLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
-        label.text = "O último a dar match, chama..."
+        label.numberOfLines = 1
         label.textColor = .white
         label.font = UIFont.systemFont(ofSize: 18)
         label.layer.shadowColor = UIColor.black.cgColor
@@ -67,7 +74,7 @@ class CombineCardView: UIView {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
-        stackView.spacing = 8
+        stackView.spacing = 12
         return stackView
     }()
     
@@ -76,7 +83,6 @@ class CombineCardView: UIView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
-        stackView.spacing = 12
         return stackView
     }()
     
