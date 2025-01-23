@@ -18,6 +18,44 @@ class CombineCardView: UIView {
         return image
     }()
     
+    lazy var nomeLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.text = "Ana Laura"
+        label.textColor = .white
+        label.font = UIFont.boldSystemFont(ofSize: 32)
+        label.layer.shadowColor = UIColor.black.cgColor
+        label.layer.shadowRadius = 2.0
+        label.layer.shadowOpacity = 0.8
+        label.layer.shadowOffset = CGSize(width: 1, height: 1)
+        label.layer.masksToBounds = false
+        return label
+    }()
+    
+    lazy var idadeLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.text = "20"
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 28)
+        label.layer.shadowColor = UIColor.black.cgColor
+        label.layer.shadowRadius = 2.0
+        label.layer.shadowOpacity = 0.8
+        label.layer.shadowOffset = CGSize(width: 1, height: 1)
+        label.layer.masksToBounds = false
+        return label
+    }()
+    
+    lazy var stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.spacing = 12
+        return stackView
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -39,6 +77,10 @@ class CombineCardView: UIView {
     
     private func setHierarchy(){
         addSubview(fotoImageView)
+        addSubview(stackView)
+        
+        stackView.addArrangedSubview(nomeLabel)
+        stackView.addArrangedSubview(idadeLabel)
     }
     
     private func setConstraints(){
@@ -46,7 +88,15 @@ class CombineCardView: UIView {
             fotoImageView.topAnchor.constraint(equalTo: self.topAnchor),
             fotoImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             fotoImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            fotoImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            fotoImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            
+            stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16),
+            
+            nomeLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+            
+            idadeLabel.leadingAnchor.constraint(equalTo: nomeLabel.trailingAnchor, constant: 12),
         ])
     }
 }
