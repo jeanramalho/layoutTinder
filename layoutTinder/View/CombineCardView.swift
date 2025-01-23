@@ -48,10 +48,34 @@ class CombineCardView: UIView {
         return label
     }()
     
-    lazy var stackView: UIStackView = {
+    lazy var fraseLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.text = "O último a dar match, chama..."
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.layer.shadowColor = UIColor.black.cgColor
+        label.layer.shadowRadius = 2.0
+        label.layer.shadowOpacity = 0.8
+        label.layer.shadowOffset = CGSize(width: 1, height: 1)
+        label.layer.masksToBounds = false
+        return label
+    }()
+    
+    lazy var nomeIdadeStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
+        stackView.spacing = 8
+        return stackView
+    }()
+    
+    lazy var globalStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
         stackView.spacing = 12
         return stackView
     }()
@@ -77,10 +101,13 @@ class CombineCardView: UIView {
     
     private func setHierarchy(){
         addSubview(fotoImageView)
-        addSubview(stackView)
+        addSubview(globalStackView)
         
-        stackView.addArrangedSubview(nomeLabel)
-        stackView.addArrangedSubview(idadeLabel)
+        globalStackView.addArrangedSubview(nomeIdadeStackView)
+        globalStackView.addArrangedSubview(fraseLabel)
+        
+        nomeIdadeStackView.addArrangedSubview(nomeLabel)
+        nomeIdadeStackView.addArrangedSubview(idadeLabel)
     }
     
     private func setConstraints(){
@@ -90,13 +117,18 @@ class CombineCardView: UIView {
             fotoImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             fotoImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             
-            stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16),
+            globalStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            globalStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            globalStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16),
             
-            nomeLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+            nomeIdadeStackView.leadingAnchor.constraint(equalTo: globalStackView.leadingAnchor),
+            nomeIdadeStackView.trailingAnchor.constraint(equalTo: globalStackView.trailingAnchor),
+            
+            nomeLabel.leadingAnchor.constraint(equalTo: nomeIdadeStackView.leadingAnchor),
             
             idadeLabel.leadingAnchor.constraint(equalTo: nomeLabel.trailingAnchor, constant: 12),
+            
+            fraseLabel.topAnchor.constraint(equalTo: nomeIdadeStackView.bottomAnchor)
         ])
     }
 }
