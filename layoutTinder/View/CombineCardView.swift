@@ -92,6 +92,7 @@ class CombineCardView: UIView {
         image.contentMode = .scaleToFill
         image.clipsToBounds = true
         image.image = UIImage(named: "card-like")
+        image.alpha = 0.0
         return image
     }()
     
@@ -101,6 +102,7 @@ class CombineCardView: UIView {
         image.contentMode = .scaleToFill
         image.clipsToBounds = true
         image.image = UIImage(named: "card-deslike")
+        image.alpha = 0.0
         return image
     }()
     

@@ -45,13 +45,21 @@ extension CombineVC {
 
 extension CombineVC {
     @objc func handlerCard(_ gesture: UIPanGestureRecognizer){
-        if let card = gesture.view {
+        if let card = gesture.view as? CombineCardView{
             let point = gesture.translation(in: view)
             //implementa movimento de drag ou seja segurar e puchar o elemento na view
             card.center = CGPoint(x: view.center.x + point.x, y: view.center.y + point.y)
             
             //pega angulo para rotação
             let rotationAngle = point.x / view.bounds.width * 0.4
+            //condição para aparecer coração partido ou coração inteiro dependendo do lado para qual o card for arrastado
+            if point.x > 0 {
+                card.likeImageView.alpha = 1
+                card.deslikeImageView.alpha = 0
+            } else {
+                card.deslikeImageView.alpha = 0
+                card.likeImageView.alpha = 1
+            }
             
             //implementa rotação no card para que quando for arrastado ele tenha efeito rotação
             card.transform = CGAffineTransform(rotationAngle: rotationAngle)
