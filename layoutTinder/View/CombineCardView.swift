@@ -86,6 +86,24 @@ class CombineCardView: UIView {
         return stackView
     }()
     
+    lazy var likeImageView: UIImageView = {
+        let image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.contentMode = .scaleToFill
+        image.clipsToBounds = true
+        image.image = UIImage(named: "card-like")
+        return image
+    }()
+    
+    lazy var deslikeImageView: UIImageView = {
+        let image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.contentMode = .scaleToFill
+        image.clipsToBounds = true
+        image.image = UIImage(named: "card-deslike")
+        return image
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -108,6 +126,8 @@ class CombineCardView: UIView {
     private func setHierarchy(){
         addSubview(fotoImageView)
         addSubview(globalStackView)
+        addSubview(likeImageView)
+        addSubview(deslikeImageView)
         
         globalStackView.addArrangedSubview(nomeIdadeStackView)
         globalStackView.addArrangedSubview(fraseLabel)
@@ -134,7 +154,17 @@ class CombineCardView: UIView {
             
             idadeLabel.leadingAnchor.constraint(equalTo: nomeLabel.trailingAnchor, constant: 12),
             
-            fraseLabel.topAnchor.constraint(equalTo: nomeIdadeStackView.bottomAnchor)
+            fraseLabel.topAnchor.constraint(equalTo: nomeIdadeStackView.bottomAnchor),
+            
+            deslikeImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
+            deslikeImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+            deslikeImageView.widthAnchor.constraint(equalToConstant: 70),
+            deslikeImageView.heightAnchor.constraint(equalToConstant: 70),
+            
+            likeImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
+            likeImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+            likeImageView.widthAnchor.constraint(equalToConstant: 70),
+            likeImageView.heightAnchor.constraint(equalToConstant: 70),
         ])
     }
 }
