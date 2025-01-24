@@ -54,11 +54,11 @@ extension CombineVC {
             let rotationAngle = point.x / view.bounds.width * 0.4
             //condição para aparecer coração partido ou coração inteiro dependendo do lado para qual o card for arrastado
             if point.x > 0 {
-                card.likeImageView.alpha = 1
+                card.likeImageView.alpha = rotationAngle * 5
                 card.deslikeImageView.alpha = 0
             } else {
-                card.deslikeImageView.alpha = 0
-                card.likeImageView.alpha = 1
+                card.deslikeImageView.alpha = rotationAngle * 5 * -1
+                card.likeImageView.alpha = 0
             }
             
             //implementa rotação no card para que quando for arrastado ele tenha efeito rotação
@@ -70,6 +70,9 @@ extension CombineVC {
                 UIView.animate(withDuration: 0.2) {
                     card.center = self.view.center
                     card.transform = .identity
+                    // faz os corações sumirem quando o toque é finalizado
+                    card.deslikeImageView.alpha = 0
+                    card.likeImageView.alpha = 0
                 }
             }
         }
