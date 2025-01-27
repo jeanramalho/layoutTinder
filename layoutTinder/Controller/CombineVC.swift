@@ -11,6 +11,35 @@ class CombineVC: UIViewController {
     
     var usuarios: [Usuario] = []
     
+    lazy var perfilButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "icone-perfil"), for: .normal)
+        return button
+    }()
+    
+    lazy var chatButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "icone-chat"), for: .normal)
+        return button
+    }()
+    
+    lazy var logoButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "icone-logo"), for: .normal)
+        return button
+    }()
+    
+    lazy var headerStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.distribution = .equalCentering
+        return stackView
+    }()
+    
     lazy var deslikeButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -56,11 +85,21 @@ class CombineVC: UIViewController {
         return button
     }()
     
-    
+    lazy var footerStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.distribution = .equalCentering
+        return stackView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationController?.navigationBar.isHidden = true
+        
         buscaUsuarios()
+        adicionarHeaderFooter()
     }
     
     func buscaUsuarios(){
@@ -68,6 +107,59 @@ class CombineVC: UIViewController {
         self.adicionarCards()
     }
 
+}
+
+
+extension CombineVC {
+    func adicionarHeaderFooter(){
+        setHierarchy()
+        setConstraints()
+    }
+    
+    private func setHierarchy(){
+        view.addSubview(headerStackView)
+        view.addSubview(footerStackView)
+        
+        
+        footerStackView.addArrangedSubview(deslikeButton)
+        footerStackView.addArrangedSubview(superLikeButton)
+        footerStackView.addArrangedSubview(likeButton)
+        
+        headerStackView.addArrangedSubview(perfilButton)
+        headerStackView.addArrangedSubview(logoButton)
+        headerStackView.addArrangedSubview(chatButton)
+    }
+    
+    private func setConstraints(){
+        NSLayoutConstraint.activate([
+            headerStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
+            headerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            headerStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            
+            perfilButton.widthAnchor.constraint(equalToConstant: 32),
+            perfilButton.heightAnchor.constraint(equalToConstant: 32),
+            
+            logoButton.widthAnchor.constraint(equalToConstant: 32),
+            logoButton.heightAnchor.constraint(equalToConstant: 32),
+            
+            chatButton.widthAnchor.constraint(equalToConstant: 32),
+            chatButton.heightAnchor.constraint(equalToConstant: 32),
+            
+            footerStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -34),
+            footerStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            footerStackView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
+            
+            deslikeButton.heightAnchor.constraint(equalToConstant: 64),
+            deslikeButton.widthAnchor.constraint(equalToConstant: 64),
+            
+            superLikeButton.heightAnchor.constraint(equalToConstant: 64),
+            superLikeButton.widthAnchor.constraint(equalToConstant: 64),
+            
+            likeButton.heightAnchor.constraint(equalToConstant: 64),
+            likeButton.widthAnchor.constraint(equalToConstant: 64),
+            
+        ])
+    }
 }
 
 extension CombineVC {
