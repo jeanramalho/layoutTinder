@@ -11,6 +11,53 @@ class CombineVC: UIViewController {
     
     var usuarios: [Usuario] = []
     
+    lazy var deslikeButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "icone-deslike"), for: .normal)
+        button.backgroundColor = .white
+        button.layer.cornerRadius = 32
+        button.clipsToBounds = true
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowRadius = 3.0
+        button.layer.shadowOpacity = 0.1
+        button.layer.shadowOffset = CGSize(width: 1, height: 1)
+        button.layer.masksToBounds = false
+        return button
+    }()
+    
+    lazy var superLikeButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "icone-superlike"), for: .normal)
+        button.backgroundColor = .white
+        button.layer.cornerRadius = 32
+        button.clipsToBounds = true
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowRadius = 3.0
+        button.layer.shadowOpacity = 0.1
+        button.layer.shadowOffset = CGSize(width: 1, height: 1)
+        button.layer.masksToBounds = false
+        return button
+    }()
+    
+    lazy var likeButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "icone-like"), for: .normal)
+        button.backgroundColor = .white
+        button.layer.cornerRadius = 32
+        button.clipsToBounds = true
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowRadius = 3.0
+        button.layer.shadowOpacity = 0.1
+        button.layer.shadowOffset = CGSize(width: 1, height: 1)
+        button.layer.masksToBounds = false
+        return button
+    }()
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         buscaUsuarios()
