@@ -179,6 +179,10 @@ extension CombineVC {
                 view.insertSubview(card, at: 0)
        }
    }
+    
+    func removerCard(card: UIView){
+        card.removeFromSuperview()
+    }
 }
 
 
@@ -203,8 +207,18 @@ extension CombineVC {
             //implementa rotação no card para que quando for arrastado ele tenha efeito rotação
             card.transform = CGAffineTransform(rotationAngle: rotationAngle)
             
+          
+            
             // retorna com o elemento para a posição anterior quando o usuário solta o elemento
             if gesture.state == .ended {
+                //pega a ação de arrastar o card para direita ou para esquerda
+                if card.center.x > self.view.bounds.width + 50{
+                    self.removerCard(card: card)
+                }
+                if card.center.x < -50 {
+                    self.removerCard(card: card)
+                }
+                
                 //Implementa animação para retorno do card para a posição inicial
                 UIView.animate(withDuration: 0.2) {
                     card.center = self.view.center
