@@ -13,6 +13,7 @@ class CombineVC: UIViewController {
     
     enum Acao {
         case like
+        case superLike
         case deslike
     }
     
@@ -121,6 +122,8 @@ extension CombineVC {
         setConstraints()
         
         deslikeButton.addTarget(self, action: #selector(deslikeClique), for: .touchUpInside)
+        superLikeButton.addTarget(self, action: #selector(superLikeClique), for: .touchUpInside)
+        likeButton.addTarget(self, action: #selector(likeCliquqe), for: .touchUpInside)
     }
     
     private func setHierarchy(){
@@ -247,8 +250,17 @@ extension CombineVC {
         }
     }
     
+    //funções que implementam ação de like, deslike e superlike nos botões
     @objc func deslikeClique(){
         self.animarCard(rotationAngle: -0.4, acao: .deslike)
+    }
+    
+    @objc func likeCliquqe(){
+        self.animarCard(rotationAngle: 0.4, acao: .like)
+    }
+    
+    @objc func superLikeClique(){
+        self.animarCard(rotationAngle: 0, acao: .superLike)
     }
     
     func animarCard(rotationAngle: CGFloat, acao: Acao){
@@ -257,16 +269,26 @@ extension CombineVC {
                 if view.tag == usuario.id {
                     if let card = view as? CombineCardView {
                         let center: CGPoint
+                        var like: Bool
                         
                         switch acao {
                         case .deslike:
                             center = CGPoint(x: card.center.x - self.view.bounds.width, y: card.center.y + 50)
+                            like = false
+                        case .superLike:
+                            center = CGPoint(x: card.center.x, y: card.center.y - self.view.bounds.height)
+                            like = true
                         case .like:
                             center =  CGPoint(x: card.center.x + self.view.bounds.width, y: card.center.y + 50)
+                            like = true
                         }
                         UIView.animate(withDuration: 0.2, animations: {
                             card.center = center
-                            card.transform = CGAffineTransform(rotationAngle: rotationAngle)}) { (_) in
+                            card.transform = CGAffineTransform(rotationAngle: rotationAngle)
+                            
+                            card.deslikeImageView.alpha = like == false ? 1 : 0
+                            card.likeImageView.alpha = like == true ? 1 : 0
+                        }) { (_) in
                             self.removerCard(card: card)
                         }
                     }
