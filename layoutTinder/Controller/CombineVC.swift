@@ -119,6 +119,8 @@ extension CombineVC {
     func adicionarHeaderFooter(){
         setHierarchy()
         setConstraints()
+        
+        deslikeButton.addTarget(self, action: #selector(deslikeClique), for: .touchUpInside)
     }
     
     private func setHierarchy(){
@@ -165,7 +167,10 @@ extension CombineVC {
             
         ])
     }
-}
+    
+    
+    
+    }
 
 extension CombineVC {
    func adicionarCards(){
@@ -240,6 +245,10 @@ extension CombineVC {
                 }
             }
         }
+    }
+    
+    @objc func deslikeClique(){
+        self.animarCard(rotationAngle: -0.4, acao: .deslike)
     }
     
     func animarCard(rotationAngle: CGFloat, acao: Acao){
