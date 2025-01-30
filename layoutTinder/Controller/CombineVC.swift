@@ -109,13 +109,22 @@ class CombineVC: UIViewController {
         let loading = Loading(frame: view.frame)
         view.insertSubview(loading, at: 0)
         
-        //buscaUsuarios()
+        buscaUsuarios()
         adicionarHeaderFooter()
     }
     
     func buscaUsuarios(){
-        self.usuarios = UsuarioService.shared.buscaUsuarios()
-        self.adicionarCards()
+//        self.usuarios = UsuarioService.shared.buscaUsuarios()
+//        self.adicionarCards()
+        
+        UsuarioService.shared.buscaUsuarios {(usuarios, err) in
+            if let usuarios = usuarios {
+                DispatchQueue.main.async {
+                    self.usuarios = usuarios
+                    self.adicionarCards()
+                }
+            }
+        }
     }
 
 }
