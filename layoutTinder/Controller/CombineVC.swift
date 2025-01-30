@@ -99,12 +99,17 @@ class CombineVC: UIViewController {
         return stackView
     }()
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationController?.navigationBar.isHidden = true
         
-        buscaUsuarios()
+        let loading = Loading(frame: view.frame)
+        view.insertSubview(loading, at: 0)
+        
+        //buscaUsuarios()
         adicionarHeaderFooter()
     }
     
@@ -189,7 +194,7 @@ extension CombineVC {
                gesture.addTarget(self, action: #selector(handlerCard))
                card.addGestureRecognizer(gesture)
            
-                view.insertSubview(card, at: 0)
+                view.insertSubview(card, at: 1)
        }
    }
     
