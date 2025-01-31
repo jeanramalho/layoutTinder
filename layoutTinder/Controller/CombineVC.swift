@@ -100,7 +100,6 @@ class CombineVC: UIViewController {
     }()
     
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -218,6 +217,12 @@ extension CombineVC {
     func verificarMatch(usuario: Usuario){
         if usuario.match {
             print("Match")
+            
+            let matchVC = MatchVC()
+            matchVC.modalPresentationStyle = .fullScreen
+            
+            self.present(matchVC, animated: true, completion: nil)
+            
         }
     }
 }
