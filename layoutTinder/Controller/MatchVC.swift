@@ -83,6 +83,13 @@ class MatchVC: UIViewController {
         return button
     }()
     
+    lazy var gradient: CAGradientLayer = {
+        let gradient = CAGradientLayer()
+        gradient.frame = view.frame
+        gradient.colors = [UIColor.red.cgColor, UIColor.black.cgColor]
+        return gradient
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,6 +100,7 @@ class MatchVC: UIViewController {
     private func setupUI(){
         setHierarchy()
         setConstraints()
+        
     }
     
     private func setHierarchy(){
@@ -105,6 +113,8 @@ class MatchVC: UIViewController {
         infoStackView.addArrangedSubview(voltarButton)
         
         mensagemTxt.addSubview(mensagemEnviarButton)
+        
+        fotoImageView.layer.addSublayer(gradient)
     }
     
     private func setConstraints(){
