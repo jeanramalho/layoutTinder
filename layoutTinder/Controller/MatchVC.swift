@@ -9,10 +9,18 @@ import UIKit
 
 class MatchVC: UIViewController {
     
+    var usuario: Usuario? {
+        didSet{
+            if let usuario = usuario {
+                fotoImageView.image = UIImage(named: usuario.foto)
+                mensagemLabel.text = "\(usuario.nome) curtiu você também!"
+            }
+        }
+    }
+    
     lazy var fotoImageView: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.image = UIImage(named: "pessoa-1")
         return image
     }()
     
@@ -30,7 +38,6 @@ class MatchVC: UIViewController {
         label.textColor = .white
         label.numberOfLines = 1
         label.font = .systemFont(ofSize: 18)
-        label.text = "Ana curtiu você também!"
         label.textAlignment = .center
         label.layer.shadowColor = UIColor.black.cgColor
         label.layer.shadowRadius = 2.0
@@ -86,7 +93,7 @@ class MatchVC: UIViewController {
     lazy var gradient: CAGradientLayer = {
         let gradient = CAGradientLayer()
         gradient.frame = view.frame
-        gradient.colors = [UIColor.red.cgColor, UIColor.black.cgColor]
+        gradient.colors = [UIColor.clear.cgColor, UIColor.clear.cgColor ,UIColor.black.cgColor]
         return gradient
     }()
     
@@ -100,6 +107,8 @@ class MatchVC: UIViewController {
     private func setupUI(){
         setHierarchy()
         setConstraints()
+        
+        voltarButton.addTarget(self, action: #selector(voltarClique), for: .touchUpInside)
         
     }
     
@@ -138,5 +147,9 @@ class MatchVC: UIViewController {
             
             
         ])
+    }
+    
+    @objc func voltarClique(){
+        self.dismiss(animated: true, completion: nil)
     }
 }
