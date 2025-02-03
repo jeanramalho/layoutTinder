@@ -168,8 +168,8 @@ class MatchVC: UIViewController {
             if let duracao = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double {
                 UIView.animate(withDuration: duracao) {
                     self.view.frame = CGRect(x: self.view.frame.origin.x, y: self.view.frame.origin.y, width: self.view.frame.width, height: self.view.frame.height - keyboardSize.height)
+                    self.view.layoutIfNeeded()
                 }
-                self.view.layoutIfNeeded()
             }
         }
     }
