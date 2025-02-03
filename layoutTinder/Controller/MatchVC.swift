@@ -110,6 +110,8 @@ class MatchVC: UIViewController {
         
         voltarButton.addTarget(self, action: #selector(voltarClique), for: .touchUpInside)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+    
     }
     
     private func setHierarchy(){
@@ -151,5 +153,16 @@ class MatchVC: UIViewController {
     
     @objc func voltarClique(){
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func keyboarShow(notification: NSNotification){
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if let duracao = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double {
+                UIView.animate(withDuration: duracao) {
+                    self.view.frame = CGRect(x: self.view.frame.origin.x, y: self.view.frame.origin.y, width: self.view.frame.width, height: self.view.frame.height - keyboardSize.height)
+                }
+                self.view.layoutIfNeeded()
+            }
+        }
     }
 }
