@@ -102,6 +102,9 @@ class MatchVC: UIViewController {
         super.viewDidLoad()
         
         setupUI()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     private func setupUI(){
@@ -110,7 +113,7 @@ class MatchVC: UIViewController {
         
         voltarButton.addTarget(self, action: #selector(voltarClique), for: .touchUpInside)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
     
     }
     
@@ -151,11 +154,16 @@ class MatchVC: UIViewController {
         ])
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+    
     @objc func voltarClique(){
         self.dismiss(animated: true, completion: nil)
     }
+
     
-    @objc func keyboarShow(notification: NSNotification){
+    @objc func keyboardShow(notification: NSNotification){
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             if let duracao = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double {
                 UIView.animate(withDuration: duracao) {
@@ -163,6 +171,17 @@ class MatchVC: UIViewController {
                 }
                 self.view.layoutIfNeeded()
             }
+        }
+    }
+    
+    
+    @objc func keyboardHide(notification: NSNotification){
+        
+            if let duracao = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double {
+                UIView.animate(withDuration: duracao) {
+                    self.view.frame = UIScreen.main.bounds
+                    self.view.layoutIfNeeded()
+                }
         }
     }
 }
