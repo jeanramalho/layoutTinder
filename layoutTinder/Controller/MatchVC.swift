@@ -7,7 +7,7 @@
 import Foundation
 import UIKit
 
-class MatchVC: UIViewController {
+class MatchVC: UIViewController, UITextFieldDelegate {
     
     var usuario: Usuario? {
         didSet{
@@ -69,6 +69,7 @@ class MatchVC: UIViewController {
         
         textField.rightView = UIView(frame: CGRect(x: 0, y: 0, width: 90, height: 0))
         textField.rightViewMode = .always
+        
         return textField
     }()
     
@@ -101,19 +102,22 @@ class MatchVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupUI()
+        setup()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    private func setupUI(){
+    private func setup(){
         setHierarchy()
         setConstraints()
         
         voltarButton.addTarget(self, action: #selector(voltarClique), for: .touchUpInside)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
+        mensagemEnviarButton.addTarget(self, action: #selector(enviarMensagem), for: .touchUpInside)
+        
+        mensagemTxt.delegate = self
     
     }
     
@@ -158,6 +162,14 @@ class MatchVC: UIViewController {
         view.endEditing(true)
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.enviarMensagem()
+        
+        return true
+    }
+    
+   
+    
     @objc func voltarClique(){
         self.dismiss(animated: true, completion: nil)
     }
@@ -188,4 +200,12 @@ class MatchVC: UIViewController {
                 }
         }
     }
+    
+    @objc func enviarMensagem(){
+        if let mensagem = self.mensagemTxt.text {
+            print(mensagem)
+        }
+    }
 }
+
+
