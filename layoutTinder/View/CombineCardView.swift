@@ -121,6 +121,8 @@ class CombineCardView: UIView {
         layer.cornerRadius = 8
         clipsToBounds = true
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(visualizarClique))
+        
         setHierarchy()
         setConstraints()
     }
