@@ -197,6 +197,10 @@ extension CombineVC {
                card.center = view.center
                 card.usuario = usuario
                 card.tag = usuario.id
+                
+                card.calback = {(data) in
+                    self.verificarDetalhe(usuario: data)
+                }
                
                let gesture = UIPanGestureRecognizer()
                gesture.addTarget(self, action: #selector(handlerCard))
@@ -225,6 +229,14 @@ extension CombineVC {
             self.present(matchVC, animated: true, completion: nil)
             
         }
+    }
+    
+    func verificarDetalhe(usuario: Usuario) {
+        let detalheVC = UIViewController()
+        detalheVC.view.backgroundColor = .red
+        detalheVC.modalPresentationStyle = .fullScreen
+        
+        self.present(detalheVC, animated: true, completion: nil)
     }
 }
 

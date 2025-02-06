@@ -106,6 +106,8 @@ class CombineCardView: UIView {
         return image
     }()
     
+    var calback: ((Usuario) -> Void)?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -122,6 +124,8 @@ class CombineCardView: UIView {
         clipsToBounds = true
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(visualizarClique))
+        globalStackView.isUserInteractionEnabled = true
+        globalStackView.addGestureRecognizer(tap)
         
         setHierarchy()
         setConstraints()
@@ -170,5 +174,11 @@ class CombineCardView: UIView {
             likeImageView.widthAnchor.constraint(equalToConstant: 70),
             likeImageView.heightAnchor.constraint(equalToConstant: 70),
         ])
+    }
+    
+    @objc func visualizarClique(){
+        if let usuario = self.usuario {
+            self.calback?(usuario)
+        }
     }
 }
