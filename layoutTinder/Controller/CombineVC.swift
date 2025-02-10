@@ -232,8 +232,7 @@ extension CombineVC {
     }
     
     func verificarDetalhe(usuario: Usuario) {
-        let detalheVC = UIViewController()
-        detalheVC.view.backgroundColor = .red
+        let detalheVC = DetalheVC()
         detalheVC.modalPresentationStyle = .fullScreen
         
         self.present(detalheVC, animated: true, completion: nil)
