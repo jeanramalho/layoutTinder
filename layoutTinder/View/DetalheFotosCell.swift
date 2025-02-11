@@ -17,7 +17,11 @@ class DetalhesFotoCell: UICollectionViewCell {
         return label
     }()
     
-    let slideFotosVC = SlidesFotosVC()
+    lazy var slideFotosVC: SlidesFotosVC = {
+        let slide = SlidesFotosVC()
+        slide.view.translatesAutoresizingMaskIntoConstraints = false
+        return slide
+    }()
     
     
     override init(frame: CGRect) {
@@ -40,25 +44,23 @@ class DetalhesFotoCell: UICollectionViewCell {
     private func setHierarchy(){
         self.addSubview(descricaoLabel)
         self.addSubview(slideFotosVC.view)
-        
+    
     }
     
     private func setConstraints(){
+
         NSLayoutConstraint.activate([
             
             descricaoLabel.topAnchor.constraint(equalTo: self.topAnchor),
             descricaoLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             descricaoLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
             
-            
+            slideFotosVC.view.topAnchor.constraint(equalTo: descricaoLabel.bottomAnchor),
+            slideFotosVC.view.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            slideFotosVC.view.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            slideFotosVC.view.bottomAnchor.constraint(equalTo: self.bottomAnchor),
  
         ])
-        slideFotosVC.view.preencher(
-          top: descricaoLabel.bottomAnchor,
-          leading: leadingAnchor,
-          trailing: trailingAnchor,
-          bottom: bottomAnchor
-        )
         
     }
 }
