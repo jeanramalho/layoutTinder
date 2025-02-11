@@ -7,6 +7,10 @@
 import Foundation
 import UIKit
 
+class HeaderLayout {
+    
+}
+
 class DetalheVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     let cellId = "cellId"
