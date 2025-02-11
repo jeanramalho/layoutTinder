@@ -84,17 +84,15 @@ class DetalheVC: UICollectionViewController, UICollectionViewDelegateFlowLayout 
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-//        cell.backgroundColor = .blue
-//        return cell
         
         if indexPath.item == 0 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: perfilId, for: indexPath) as! DetalhePerfilCell
             cell.usuario = self.usuario
+            return cell
         }
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: fotosId, for: indexPath) as! DetalhesFotoCell
-        
+
         return cell
     }
     
@@ -102,14 +100,18 @@ class DetalheVC: UICollectionViewController, UICollectionViewDelegateFlowLayout 
         
         
         let width: CGFloat = UIScreen.main.bounds.width
-        var height: CGFloat = 100
+        var height: CGFloat = UIScreen.main.bounds.width * 0.66
         
-        let cell = DetalhePerfilCell(frame: CGRect(x: 0, y: 0, width: width, height: height))
-        cell.usuario = self.usuario
-        cell.layoutIfNeeded()
+        if indexPath.item == 0 {
+            let cell = DetalhePerfilCell(frame: CGRect(x: 0, y: 0, width: width, height: height))
+            cell.usuario = self.usuario
+            cell.layoutIfNeeded()
+            
+            let estimativaTamanho = cell.systemLayoutSizeFitting(CGSize(width: width, height: 1000))
+            height = estimativaTamanho.height
+        }
         
-        let estimativaTamanho = cell.systemLayoutSizeFitting(CGSize(width: width, height: 1000))
-        height = estimativaTamanho.height
+       
         
         return .init(width: width, height: height)
     }
