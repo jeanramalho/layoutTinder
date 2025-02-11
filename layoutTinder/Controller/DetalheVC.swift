@@ -7,8 +7,31 @@
 import Foundation
 import UIKit
 
-class HeaderLayout {
+class HeaderLayout: UICollectionViewFlowLayout {
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        let layoutAttributes = super.layoutAttributesForElements(in: rect)
+        
+        layoutAttributes?.forEach({ (attribute) in
+            if attribute.representedElementKind == UICollectionView.elementKindSectionHeader {
+                
+                guard let collectionView = collectionView else {return}
+                
+                let contentOffSetY = collectionView.contentOffset.y
+                
+                attribute.frame = CGRect(
+                    x: 0,
+                    y: contentOffSetY,
+                    width: collectionView.bounds.width,
+                    height: attribute.bounds.height - contentOffSetY)
+            }
+        })
+        
+        return layoutAttributes
+    }
     
+    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+        return true
+    }
 }
 
 class DetalheVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
@@ -17,7 +40,7 @@ class DetalheVC: UICollectionViewController, UICollectionViewDelegateFlowLayout 
     let headerId = "headerId"
     
     init() {
-        super.init(collectionViewLayout: UICollectionViewFlowLayout())
+        super.init(collectionViewLayout: HeaderLayout())
     }
     
     required init?(coder: NSCoder) {
