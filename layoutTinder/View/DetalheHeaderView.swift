@@ -9,10 +9,17 @@ import UIKit
 
 class DetalheHeaderView: UICollectionReusableView {
     
+    var usuario: Usuario? {
+        didSet{
+            if let usuario = usuario {
+                fotoImageView.image = UIImage(named: usuario.foto)
+            }
+        }
+    }
+    
     lazy var fotoImageView: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.image = UIImage(named: "pessoa-1")
         image.contentMode = .scaleAspectFill
         return image
     }()

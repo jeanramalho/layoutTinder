@@ -233,6 +233,7 @@ extension CombineVC {
     
     func verificarDetalhe(usuario: Usuario) {
         let detalheVC = DetalheVC()
+        detalheVC.usuario = usuario
         detalheVC.modalPresentationStyle = .fullScreen
         
         self.present(detalheVC, animated: true, completion: nil)
