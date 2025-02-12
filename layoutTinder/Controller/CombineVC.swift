@@ -236,6 +236,16 @@ extension CombineVC {
         detalheVC.usuario = usuario
         detalheVC.modalPresentationStyle = .fullScreen
         
+        detalheVC.callback = {(usuario, acao) in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                if acao == .deslike {
+                    self.deslikeClique()
+                } else {
+                    self.likeCliquqe()
+                }
+            }
+        }
+        
         self.present(detalheVC, animated: true, completion: nil)
     }
 }

@@ -12,11 +12,13 @@ class SlideFotoCell: UICollectionViewCell {
     lazy var fotoImageView: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
+        image.contentMode = .scaleAspectFill
         return image
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupUI()
     }
     
     required init?(coder: NSCoder) {
@@ -24,8 +26,8 @@ class SlideFotoCell: UICollectionViewCell {
     }
     
     private func setupUI(){
-        self.layer.cornerRadius = 8
-        self.clipsToBounds = true
+        layer.cornerRadius = 8
+        clipsToBounds = true
         
         setHierarchy()
         setConstraints()

@@ -42,10 +42,57 @@ class DetalheVC: UICollectionViewController, UICollectionViewDelegateFlowLayout 
         }
     }
     
+    enum Acao {
+        case like
+        case deslike
+    }
+    
     let cellId = "cellId"
     let headerId = "headerId"
     let perfilId = "perfilId"
     let fotosId = "fotosId"
+    
+    lazy var deslikeButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "icone-deslike"), for: .normal)
+        button.backgroundColor = .white
+        button.layer.cornerRadius = 32
+        button.clipsToBounds = true
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowRadius = 3.0
+        button.layer.shadowOpacity = 0.1
+        button.layer.shadowOffset = CGSize(width: 1, height: 1)
+        button.layer.masksToBounds = false
+        return button
+
+    }()
+    
+    lazy var likeButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "icone-like"), for: .normal)
+        button.backgroundColor = .white
+        button.layer.cornerRadius = 32
+        button.clipsToBounds = true
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowRadius = 3.0
+        button.layer.shadowOpacity = 0.1
+        button.layer.shadowOffset = CGSize(width: 1, height: 1)
+        button.layer.masksToBounds = false
+        return button
+
+    }()
+    
+    lazy var footerStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.distribution = .equalCentering
+        return stackView
+    }()
+    
+    var callback: ((Usuario?, Acao) -> Void)?
     
     init() {
         super.init(collectionViewLayout: HeaderLayout())
@@ -66,6 +113,37 @@ class DetalheVC: UICollectionViewController, UICollectionViewDelegateFlowLayout 
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.register(DetalhePerfilCell.self, forCellWithReuseIdentifier: perfilId)
         collectionView.register(DetalhesFotoCell.self, forCellWithReuseIdentifier: fotosId)
+        
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 134, right: 0)
+        
+        deslikeButton.addTarget(self, action: #selector(deslikeClique), for: .touchUpInside)
+        likeButton.addTarget(self, action: #selector(likeClique), for: .touchUpInside)
+            
+        setHirearchy()
+        setConstraints()
+    }
+    
+    private func setHirearchy(){
+        self.view.addSubview(footerStackView)
+        
+        footerStackView.addArrangedSubview(UIView())
+        footerStackView.addArrangedSubview(deslikeButton)
+        footerStackView.addArrangedSubview(likeButton)
+        footerStackView.addArrangedSubview(UIView())
+    }
+    
+    private func setConstraints(){
+        NSLayoutConstraint.activate([
+            footerStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -34),
+            footerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            footerStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            
+            deslikeButton.heightAnchor.constraint(equalToConstant: 64),
+            deslikeButton.widthAnchor.constraint(equalToConstant: 64),
+            
+            likeButton.heightAnchor.constraint(equalToConstant: 64),
+            likeButton.widthAnchor.constraint(equalToConstant: 64),
+        ])
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -114,6 +192,20 @@ class DetalheVC: UICollectionViewController, UICollectionViewDelegateFlowLayout 
        
         
         return .init(width: width, height: height)
+    }
+    
+    @objc func voltarClique(){
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func deslikeClique(){
+        self.callback?(self.usuario, Acao.deslike)
+        self.voltarClique()
+    }
+    
+    @objc func likeClique(){
+        self.callback?(self.usuario, Acao.like)
+        self.voltarClique()
     }
     
 }
