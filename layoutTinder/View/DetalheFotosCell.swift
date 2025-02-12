@@ -35,7 +35,6 @@ class DetalhesFotoCell: UICollectionViewCell {
     }
     
     private func setupUI(){
-        backgroundColor = .purple
         
         setHierarchy()
         setConstraints()
