@@ -92,6 +92,16 @@ class DetalheVC: UICollectionViewController, UICollectionViewDelegateFlowLayout 
         return stackView
     }()
     
+    lazy var voltarButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "icone-down"), for: .normal)
+        button.backgroundColor = UIColor(red: 232/255, green: 88/255, blue: 54/255, alpha: 1)
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 24
+        return button
+    }()
+    
     var callback: ((Usuario?, Acao) -> Void)?
     
     init() {
@@ -118,6 +128,7 @@ class DetalheVC: UICollectionViewController, UICollectionViewDelegateFlowLayout 
         
         deslikeButton.addTarget(self, action: #selector(deslikeClique), for: .touchUpInside)
         likeButton.addTarget(self, action: #selector(likeClique), for: .touchUpInside)
+        voltarButton.addTarget(self, action: #selector(voltarClique), for: .touchUpInside)
             
         setHirearchy()
         setConstraints()
@@ -125,6 +136,7 @@ class DetalheVC: UICollectionViewController, UICollectionViewDelegateFlowLayout 
     
     private func setHirearchy(){
         self.view.addSubview(footerStackView)
+        self.view.addSubview(voltarButton)
         
         footerStackView.addArrangedSubview(UIView())
         footerStackView.addArrangedSubview(deslikeButton)
@@ -143,7 +155,13 @@ class DetalheVC: UICollectionViewController, UICollectionViewDelegateFlowLayout 
             
             likeButton.heightAnchor.constraint(equalToConstant: 64),
             likeButton.widthAnchor.constraint(equalToConstant: 64),
+            
+            voltarButton.heightAnchor.constraint(equalToConstant: 48),
+            voltarButton.widthAnchor.constraint(equalToConstant: 48),
+            voltarButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            voltarButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 140),
         ])
+
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -192,6 +210,16 @@ class DetalheVC: UICollectionViewController, UICollectionViewDelegateFlowLayout 
        
         
         return .init(width: width, height: height)
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let originY = view.bounds.height * 0.7 - 24
+        
+        if scrollView.contentOffset.y > 0 {
+            self.voltarButton.frame.origin.y = originY - scrollView.contentOffset.y
+        } else {
+            self.voltarButton.frame.origin.y = originY + scrollView.contentOffset.y * -1
+        }
     }
     
     @objc func voltarClique(){
